@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">myApp</string>
+    <string name="profile_choose_language">age</string>
 </resources>

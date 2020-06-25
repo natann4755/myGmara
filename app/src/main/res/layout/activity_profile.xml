@@ -4,9 +4,224 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activitys.utils.ProfileActivity">
 
-    
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/language_LL"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:id="@+id/Profile_Change_language_RG"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/radio_Hebrew"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:checked="true"-->
+<!--                android:text="עברית" />-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/radio_English"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="אנגלית" />-->
+
+<!--&lt;!&ndash;            <RadioButton&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/radio_French"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="צרפתית" />&ndash;&gt;-->
+
+<!--        </RadioGroup>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/profile_Change_language_BU"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/profile_choose_language" />-->
+
+
+<!--    </LinearLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="מה ברצונך ללמוד?"/>
+
+        <Button
+            android:id="@+id/profile_DLETE_BU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="שבת" />
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ברצונך לנהל גם חזרה על הלימוד?"/>
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/Profile_numberOfReps_RG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radio_No_thanks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="לא תודה"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/radio_Once"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="פעם אחת" />
+
+            <RadioButton
+                android:id="@+id/radio_Twice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="פעמיים" />
+
+            <RadioButton
+                android:id="@+id/radio_3_times"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="שלש פעמים" />
+
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="ברצונך לקבל התראות על דפים שהחסרת?"/>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal">-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="לא תודה"/>-->
+
+<!--            <CheckBox-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:checked="true"/>-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal">-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="פעם בחודש - עבור כל החודש"/>-->
+
+<!--            <CheckBox-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal">-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="פעם בשבוע - עבור השבוע שעבר"/>-->
+
+<!--            <CheckBox-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal">-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="פעם ביום עבור אתמול"/>-->
+
+<!--            <CheckBox-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
+<!--        </LinearLayout>-->
+
+
+<!--    </LinearLayout>-->
+
+
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="ברצונך ליצור לימוד יומי של"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="עם 3 חזרות"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="ללא חזרות"/>-->
+
+    <Button
+        android:id="@+id/Profile_create_Learning_BU"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="צור לימוד יומי"/>
+
+
+
+
+
+
+
+
 
 </LinearLayout>
