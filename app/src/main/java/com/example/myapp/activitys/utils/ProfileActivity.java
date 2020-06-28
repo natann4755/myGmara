@@ -3,34 +3,39 @@ package com.example.myapp.activitys.utils;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
+import com.example.model.Daf;
 import com.example.model.Profile;
 import com.example.myapp.R;
 import com.example.myapp.databinding.ActivityProfileBinding;
 import com.example.myapp.utils.Language;
+import java.util.ArrayList;
 
-import java.util.Locale;
+
+import static com.example.myapp.activitys.utils.SplashActivity.KEY_EXTRA_List1;
 
 public class ProfileActivity extends AppCompatActivity {
     private ActivityProfileBinding binding;
     private RecyclerView myRecyclerViewStudyOptions;
-    private Button changeLanguageButton;
-    private RadioGroup changeLanguageRadioGroup;
+
+    private ArrayList <Daf> mListLearning = new ArrayList<>();
     private RadioGroup numberOfRepsRadioGroup;
     private Button DELETE_Button;
     private Button createLearningBU;
     private Profile mProfile = new Profile(0);
+
+    private String mStringTypeOfStudy;
+
+
+
+    private Button changeLanguageButton;
+    private RadioGroup changeLanguageRadioGroup;
 
 
     @Override
@@ -49,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void initListener() {
 //        changeLanguageButton.setOnClickListener(v -> onRadioButtonLanguageClicked(v));
-        DELETE_Button.setOnClickListener(v -> DLETEButtonLanguageClicked(v));
+        DELETE_Button.setOnClickListener(v -> DLETEButtonTypeOfStudyClicked(v));
         createLearningBU.setOnClickListener(v -> createLearningClicked(v));
 
     }
@@ -65,14 +70,19 @@ public class ProfileActivity extends AppCompatActivity {
       numberOfRepsRadioGroup = binding.ProfileNumberOfRepsRG;
         createLearningBU = binding.ProfileCreateLearningBU;
 
-
-
     }
 
     private void createLearningClicked(View v) {
         onRadioNumberOfReps();
+        initListLearning();
         alertDialogAreYouSure();
 
+    }
+
+    private void initListLearning() {
+        for (int i = 2; i <158 ; i++) {
+            mListLearning.add(new Daf("שבת",i));
+        }
     }
 
     private void alertDialogAreYouSure() {
@@ -81,6 +91,8 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
+                        Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                        intent.putExtra(KEY_EXTRA_List1, mListLearning);
                         startActivity(new Intent(ProfileActivity.this, MainActivity.class));
                         break;
 
@@ -91,18 +103,18 @@ public class ProfileActivity extends AppCompatActivity {
             }
         };
 
-        String typeOfStudy =  "מסוג: " + mProfile.getTypeOfStudy();
+        String typeOfStudy =  "מסוג: " + mStringTypeOfStudy;
         String numberOfReps =  "חזרות: " + mProfile.getNumberOfReps();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("ברצונך ליצור לימוד יומי");
         builder.setMessage(typeOfStudy +"\n"+ numberOfReps);
         builder.setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
-
     }
 
-    private void DLETEButtonLanguageClicked(View v) {
+    private void DLETEButtonTypeOfStudyClicked(View v) {
         mProfile.setTypeOfStudy("שבת");
+        mStringTypeOfStudy = "שבת";
     }
 
     private void setAppLanguage(String language) {
@@ -142,5 +154,9 @@ public class ProfileActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
+
+
 
 }

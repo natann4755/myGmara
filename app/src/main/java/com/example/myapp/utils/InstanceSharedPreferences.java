@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.example.model.Daf;
 import com.example.model.Profile;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Set;
 
 public class InstanceSharedPreferences {
@@ -14,6 +18,8 @@ public class InstanceSharedPreferences {
     private static InstanceSharedPreferences mInstanceSharedPreferences;
 
     private SharedPreferences mSharedPreferences;
+
+    private Gson gson = new Gson();
 
 
     public static InstanceSharedPreferences getInstance(Context context) {
@@ -53,7 +59,6 @@ public class InstanceSharedPreferences {
 
     public void setProperty(String key, Profile value) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        Gson gson = new Gson();
         String json = gson.toJson(value);
         editor.putString(key, json);
         editor.apply();
@@ -77,13 +82,27 @@ public class InstanceSharedPreferences {
 
     public Profile getProfile(String key) {
         Profile mProfile = null;
-        Gson gson = new Gson();
         String json = mSharedPreferences.getString(key, null);
         if (json != null) {
             mProfile = gson.fromJson(json, Profile.class);
         }
         return mProfile;
     }
+
+    public void setArrayList (ArrayList<Daf> list, String key){
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        String json = gson.toJson(list);
+        editor.putString(key, json);
+        editor.apply();
+    }
+
+    public ArrayList <Daf> getArrayList (String key){
+        String json = mSharedPreferences.getString(key, null);
+        Type type = new TypeToken<ArrayList<Daf>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
+
 
 
     public boolean deleteAll() {
