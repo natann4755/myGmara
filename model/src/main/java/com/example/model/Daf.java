@@ -1,6 +1,9 @@
 package com.example.model;
 
-public class Daf {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Daf implements Parcelable {
     private String masechet;
     private int pageNumber;
     private boolean isLearning;
@@ -12,6 +15,27 @@ public class Daf {
         this.masechet = masechet;
         this.pageNumber = pageNumber;
     }
+
+    protected Daf(Parcel in) {
+        masechet = in.readString();
+        pageNumber = in.readInt();
+        isLearning = in.readByte() != 0;
+        chazara = in.readInt();
+        isLearningPage1 = in.readByte() != 0;
+        isLearningPage2 = in.readByte() != 0;
+    }
+
+    public static final Creator<Daf> CREATOR = new Creator<Daf>() {
+        @Override
+        public Daf createFromParcel(Parcel in) {
+            return new Daf(in);
+        }
+
+        @Override
+        public Daf[] newArray(int size) {
+            return new Daf[size];
+        }
+    };
 
     public String getMasechet() {
         return masechet;
@@ -59,5 +83,20 @@ public class Daf {
 
     public void setLearningPage2(boolean learningPage2) {
         isLearningPage2 = learningPage2;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(masechet);
+        dest.writeInt(pageNumber);
+        dest.writeByte((byte) (isLearning ? 1 : 0));
+        dest.writeInt(chazara);
+        dest.writeByte((byte) (isLearningPage1 ? 1 : 0));
+        dest.writeByte((byte) (isLearningPage2 ? 1 : 0));
     }
 }

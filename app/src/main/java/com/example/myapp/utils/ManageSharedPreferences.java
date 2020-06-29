@@ -30,7 +30,7 @@ public class ManageSharedPreferences {
                 .setArrayList(list, KEY_ListLearning);
     }
 
-    public ArrayList<Daf> getArrayList(Context context){
+    public static ArrayList<Daf> getArrayList(Context context){
         ArrayList mArrayList =  InstanceSharedPreferences.getInstance(context)
                 .getArrayList(KEY_ListLearning);
         return mArrayList;

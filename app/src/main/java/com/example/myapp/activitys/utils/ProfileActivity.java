@@ -15,6 +15,8 @@ import com.example.model.Profile;
 import com.example.myapp.R;
 import com.example.myapp.databinding.ActivityProfileBinding;
 import com.example.myapp.utils.Language;
+import com.example.myapp.utils.ManageSharedPreferences;
+
 import java.util.ArrayList;
 
 
@@ -22,16 +24,11 @@ import static com.example.myapp.activitys.utils.SplashActivity.KEY_EXTRA_List1;
 
 public class ProfileActivity extends AppCompatActivity {
     private ActivityProfileBinding binding;
-    private RecyclerView myRecyclerViewStudyOptions;
-
     private ArrayList <Daf> mListLearning = new ArrayList<>();
-    private RadioGroup numberOfRepsRadioGroup;
-    private Button DELETE_Button;
-    private Button createLearningBU;
     private Profile mProfile = new Profile(0);
-
     private String mStringTypeOfStudy;
 
+    private RecyclerView myRecyclerViewStudyOptions;
 
 
     private Button changeLanguageButton;
@@ -46,43 +43,31 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(view);
         initViews();
         initListener();
+    }
 
-
-        
-        
+    private void initViews() {
+        myRecyclerViewStudyOptions = binding.myRecyclerView;
+//      changeLanguageButton = binding.profileChangeLanguageBU;
+//      changeLanguageRadioGroup = binding.ProfileChangeLanguageRG;
     }
 
     private void initListener() {
 //        changeLanguageButton.setOnClickListener(v -> onRadioButtonLanguageClicked(v));
-        DELETE_Button.setOnClickListener(v -> DLETEButtonTypeOfStudyClicked(v));
-        createLearningBU.setOnClickListener(v -> createLearningClicked(v));
-
-    }
-
-
-
-
-    private void initViews() {
-      myRecyclerViewStudyOptions = binding.myRecyclerView;
-//      changeLanguageButton = binding.profileChangeLanguageBU;
-//      changeLanguageRadioGroup = binding.ProfileChangeLanguageRG;
-      DELETE_Button = binding.profileDLETEBU;
-      numberOfRepsRadioGroup = binding.ProfileNumberOfRepsRG;
-        createLearningBU = binding.ProfileCreateLearningBU;
-
+        binding.profileDLETEBU.setOnClickListener(v -> DLETEButtonTypeOfStudyClicked(v));
+        binding.ProfileCreateLearningBU.setOnClickListener(v -> createLearningClicked(v));
     }
 
     private void createLearningClicked(View v) {
         onRadioNumberOfReps();
         initListLearning();
         alertDialogAreYouSure();
-
     }
 
     private void initListLearning() {
         for (int i = 2; i <158 ; i++) {
             mListLearning.add(new Daf("שבת",i));
         }
+        ManageSharedPreferences.saveArrayList(mListLearning,getBaseContext());
     }
 
     private void alertDialogAreYouSure() {
@@ -91,6 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
+                        ManageSharedPreferences.setProfile(mProfile,getBaseContext());
                         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
                         intent.putExtra(KEY_EXTRA_List1, mListLearning);
                         startActivity(new Intent(ProfileActivity.this, MainActivity.class));
@@ -138,7 +124,7 @@ public class ProfileActivity extends AppCompatActivity {
 //    }
 
     public void onRadioNumberOfReps () {
-        int selectedId = numberOfRepsRadioGroup.getCheckedRadioButtonId();
+        int selectedId = binding.ProfileNumberOfRepsRG.getCheckedRadioButtonId();
         switch (selectedId) {
             case R.id.radio_No_thanks:
                 mProfile.setNumberOfReps(0);

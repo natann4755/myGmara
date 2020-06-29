@@ -8,7 +8,6 @@ import java.util.Locale;
 public class Language {
 
     public static void setAppLanguage(String language, Context context) {
-
         if (language!= null && ( !language.equals(""))) {
             Locale locale = new Locale(language);
             Locale.setDefault(locale);
