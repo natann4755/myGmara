@@ -1,4 +1,4 @@
-package com.example.myapp.activitys.utils;
+package com.example.myapp.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +20,7 @@ import com.example.myapp.utils.ManageSharedPreferences;
 import java.util.ArrayList;
 
 
-import static com.example.myapp.activitys.utils.SplashActivity.KEY_EXTRA_List1;
+import static com.example.myapp.activity.SplashActivity.KEY_EXTRA_List1;
 
 public class ProfileActivity extends AppCompatActivity {
     private ActivityProfileBinding binding;

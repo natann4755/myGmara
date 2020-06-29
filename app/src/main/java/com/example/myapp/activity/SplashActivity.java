@@ -1,9 +1,8 @@
-package com.example.myapp.activitys.utils;
+package com.example.myapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -12,7 +11,6 @@ import com.example.model.Profile;
 import com.example.myapp.R;
 import com.example.myapp.utils.Language;
 import com.example.myapp.utils.ManageSharedPreferences;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
