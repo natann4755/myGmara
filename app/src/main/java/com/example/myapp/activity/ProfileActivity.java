@@ -12,12 +12,18 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import com.example.model.Daf;
 import com.example.model.Profile;
+import com.example.model.shas_masechtot_list_models.AllShasItem;
 import com.example.myapp.R;
 import com.example.myapp.databinding.ActivityProfileBinding;
 import com.example.myapp.utils.Language;
 import com.example.myapp.utils.ManageSharedPreferences;
+import com.google.gson.Gson;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 import static com.example.myapp.activity.SplashActivity.KEY_EXTRA_List1;
@@ -25,6 +31,7 @@ import static com.example.myapp.activity.SplashActivity.KEY_EXTRA_List1;
 public class ProfileActivity extends AppCompatActivity {
     private ActivityProfileBinding binding;
     private ArrayList <Daf> mListLearning = new ArrayList<>();
+    private AllShasItem allShas;
     private Profile mProfile = new Profile(0);
     private String mStringTypeOfStudy;
 
@@ -64,10 +71,22 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initListLearning() {
+        initListAllShah();
         for (int i = 2; i <158 ; i++) {
             mListLearning.add(new Daf("שבת",i));
         }
         ManageSharedPreferences.saveArrayList(mListLearning,getBaseContext());
+    }
+
+    private void initListAllShah() {
+        Gson gson = new Gson();
+        try {
+            String txt = convertStreamToString(Objects.requireNonNull(this).getAssets().open("list_all_shas_json.txt"));
+            allShas = gson.fromJson(txt, AllShasItem.class);
+            int a =9;
+        }catch (Exception e){
+
+        }
     }
 
     private void alertDialogAreYouSure() {
@@ -143,6 +162,14 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-
-
+    private static String convertStreamToString(InputStream is) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append("\n");
+        }
+        reader.close();
+        return sb.toString();
+    }
 }
