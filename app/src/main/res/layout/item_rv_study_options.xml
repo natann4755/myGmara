@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="35dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/item_rv_study_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="דף היומי"
+        android:layout_centerInParent="true"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        />
+
+</RelativeLayout>

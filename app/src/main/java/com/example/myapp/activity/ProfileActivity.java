@@ -2,6 +2,7 @@ package com.example.myapp.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,11 +15,12 @@ import com.example.model.Daf;
 import com.example.model.Profile;
 import com.example.model.shas_masechtot_list_models.AllShasItem;
 import com.example.myapp.R;
+import com.example.myapp.adapters.RecyclerViewStudyOptionsAdapter;
 import com.example.myapp.databinding.ActivityProfileBinding;
+import com.example.myapp.interfaces.CreateTypeOfStudy;
 import com.example.myapp.utils.Language;
 import com.example.myapp.utils.ManageSharedPreferences;
 import com.google.gson.Gson;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -28,14 +30,16 @@ import java.util.Objects;
 
 import static com.example.myapp.activity.SplashActivity.KEY_EXTRA_List1;
 
-public class ProfileActivity extends AppCompatActivity {
+  public class ProfileActivity extends AppCompatActivity implements CreateTypeOfStudy {
     private ActivityProfileBinding binding;
     private ArrayList <Daf> mListLearning = new ArrayList<>();
-    private AllShasItem allShas;
+    private ArrayList <String> mStudyOptionsList = new ArrayList<>();
+    private AllShasItem mAllShas;
     private Profile mProfile = new Profile(0);
     private String mStringTypeOfStudy;
 
     private RecyclerView myRecyclerViewStudyOptions;
+    private RecyclerViewStudyOptionsAdapter mRecyclerViewStudyOptionsAdapter;
 
 
     private Button changeLanguageButton;
@@ -48,19 +52,32 @@ public class ProfileActivity extends AppCompatActivity {
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        initListAllShah();
         initViews();
         initListener();
     }
 
     private void initViews() {
-        myRecyclerViewStudyOptions = binding.myRecyclerView;
+        initRV();
+
+
 //      changeLanguageButton = binding.profileChangeLanguageBU;
 //      changeLanguageRadioGroup = binding.ProfileChangeLanguageRG;
     }
 
+    private void initRV() {
+        mStudyOptionsList.add("דף היומי");
+        mStudyOptionsList.add("תלמוד בבלי");
+        myRecyclerViewStudyOptions = binding.myRecyclerView;
+        myRecyclerViewStudyOptions.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewStudyOptionsAdapter = new RecyclerViewStudyOptionsAdapter(this,mStudyOptionsList,mAllShas);
+        myRecyclerViewStudyOptions.setAdapter(mRecyclerViewStudyOptionsAdapter);
+
+    }
+
     private void initListener() {
 //        changeLanguageButton.setOnClickListener(v -> onRadioButtonLanguageClicked(v));
-        binding.profileDLETEBU.setOnClickListener(v -> DLETEButtonTypeOfStudyClicked(v));
+//        binding.profileDLETEBU.setOnClickListener(v -> DLETEButtonTypeOfStudyClicked(v));
         binding.ProfileCreateLearningBU.setOnClickListener(v -> createLearningClicked(v));
     }
 
@@ -71,7 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initListLearning() {
-        initListAllShah();
+
         for (int i = 2; i <158 ; i++) {
             mListLearning.add(new Daf("שבת",i));
         }
@@ -82,8 +99,7 @@ public class ProfileActivity extends AppCompatActivity {
         Gson gson = new Gson();
         try {
             String txt = convertStreamToString(Objects.requireNonNull(this).getAssets().open("list_all_shas_json.txt"));
-            allShas = gson.fromJson(txt, AllShasItem.class);
-            int a =9;
+            mAllShas = gson.fromJson(txt, AllShasItem.class);
         }catch (Exception e){
 
         }
@@ -172,4 +188,24 @@ public class ProfileActivity extends AppCompatActivity {
         reader.close();
         return sb.toString();
     }
-}
+
+    @Override
+    public void CreateListTypeOfStudy(String stringTypeOfStudy) {
+        if (stringTypeOfStudy.equals("דף היומי")){
+            CreateListAllShas();
+        }
+
+    }
+
+      private void CreateListAllShas() {
+          for (int i = 0; i <mAllShas.getSeder().size() ; i++) {
+              for (int j = 0; j <mAllShas.getSeder().get(i).getMasechet().size() ; j++) {
+                  for (int k = 2; k <(mAllShas.getSeder().get(i).getMasechet().get(j).getPages()+2) ; k++) {
+                      mListLearning.add(new Daf(mAllShas.getSeder().get(i).getMasechet().get(j).getName(),k));
+                  }
+              }
+          }
+          Daf d = mListLearning.get(322);
+      }
+  }
+
