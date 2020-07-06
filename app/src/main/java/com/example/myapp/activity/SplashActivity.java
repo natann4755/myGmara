@@ -72,6 +72,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void initData() {
+
         mArrayListStudy1 = ManageSharedPreferences.getArrayList(this);
     }
 

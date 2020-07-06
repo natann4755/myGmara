@@ -10,14 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.model.Daf;
 import com.example.myapp.R;
+import com.example.myapp.activity.SplashActivity;
 import com.example.myapp.databinding.FragmentTypeStudyBinding;
+
+import java.util.ArrayList;
 
 
 public class TypeStudyFragment extends Fragment {
     public static final String TAG = TypeStudyFragment.class.getSimpleName();
     FragmentTypeStudyBinding binding;
-    View view;
+    ArrayList<Daf> myList1 = new ArrayList<>();
+    ViewPagerShewStudyFragment firstStudy ;
 
 
     public TypeStudyFragment() {
@@ -25,9 +30,10 @@ public class TypeStudyFragment extends Fragment {
     }
 
 
-    public static TypeStudyFragment newInstance() {
+    public static TypeStudyFragment newInstance(ArrayList<Daf> myList1) {
         TypeStudyFragment fragment = new TypeStudyFragment();
         Bundle args = new Bundle();
+        args.putParcelableArrayList(SplashActivity.KEY_EXTRA_List1,myList1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,8 +42,7 @@ public class TypeStudyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
-
+            myList1 = getArguments().getParcelableArrayList(SplashActivity.KEY_EXTRA_List1);
         }
     }
 
@@ -46,14 +51,16 @@ public class TypeStudyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentTypeStudyBinding.inflate(inflater, container, false);
-        openFragment(ViewPagerShewStudy.newInstance(),ViewPagerShewStudy.TAG );
+        firstStudy = ViewPagerShewStudyFragment.newInstance(myList1) ;
+        openFragment(firstStudy,ViewPagerShewStudyFragment.TAG );
         initViews();
         return binding.getRoot();
     }
     private void initViews() {
-        binding.FTPFIRSTSTUDYBUTTON.setOnClickListener(v -> openFragment(ViewPagerShewStudy.newInstance(),ViewPagerShewStudy.TAG ));
-        binding.FTPTOWSTUDYBUTTON.setOnClickListener(v -> openFragment(ViewPagerShewStudy.newInstance(),ViewPagerShewStudy.TAG ));
-        binding.FTPTHREETSTUDYBUTTON.setOnClickListener(v -> openFragment(ViewPagerShewStudy.newInstance(),ViewPagerShewStudy.TAG ));
+
+        binding.FTPFIRSTSTUDYBUTTON.setOnClickListener(v -> openFragment(firstStudy,ViewPagerShewStudyFragment.TAG ));
+//        binding.FTPTOWSTUDYBUTTON.setOnClickListener(v -> openFragment(firstStudy,ViewPagerShewStudyFragment.TAG ));
+//        binding.FTPTHREETSTUDYBUTTON.setOnClickListener(v -> openFragment(firstStudy,ViewPagerShewStudyFragment.TAG ));
     }
     public void openFragment(Fragment myfragment, String tag){
 
