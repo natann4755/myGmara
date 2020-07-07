@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.example.model.Daf;
+import com.example.model.DafLearning1;
 import com.example.model.Profile;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Set;
 
 public class InstanceSharedPreferences {
 
@@ -89,16 +88,16 @@ public class InstanceSharedPreferences {
         return mProfile;
     }
 
-    public void setArrayList (ArrayList<Daf> list, String key){
+    public void setArrayList (ArrayList<DafLearning1> list, String key){
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         String json = gson.toJson(list);
         editor.putString(key, json);
         editor.apply();
     }
 
-    public ArrayList <Daf> getArrayList (String key){
+    public ArrayList <DafLearning1> getArrayList (String key){
         String json = mSharedPreferences.getString(key, null);
-        Type type = new TypeToken<ArrayList<Daf>>() {}.getType();
+        Type type = new TypeToken<ArrayList<DafLearning1>>() {}.getType();
         return gson.fromJson(json, type);
     }
 

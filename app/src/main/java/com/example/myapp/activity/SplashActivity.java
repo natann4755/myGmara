@@ -6,17 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.model.Daf;
+import com.example.model.DafLearning1;
 import com.example.model.Profile;
 import com.example.myapp.R;
+import com.example.myapp.dataBase.AppDataBase;
 import com.example.myapp.utils.Language;
 import com.example.myapp.utils.ManageSharedPreferences;
 
 import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity {
-
-    public static String KEYSharedPreferenceIsFirstTime = "KEYSharedPreferenceIsFirstTime";
 
     public static String KEY_EXTRAProfile = "KEYmyProfile";
     public static String KEY_EXTRA_List1 = "KEY_EXTRA_List1";
@@ -25,9 +24,9 @@ public class SplashActivity extends AppCompatActivity {
 
     private boolean isFirstTime;
     private Profile mProfile;
-    private ArrayList <Daf> mArrayListStudy1;
-    private ArrayList <Daf> mArrayListStudy2;
-    private ArrayList <Daf> mArrayListStudy3;
+    private ArrayList <DafLearning1> mArrayListStudy1;
+    private ArrayList  mArrayListStudy2;
+    private ArrayList  mArrayListStudy3;
 
 
     @Override
@@ -38,7 +37,9 @@ public class SplashActivity extends AppCompatActivity {
         setLanguage();
 
         moveToNextActivity();
-        initData();
+        if (!isFirstTime) {
+            initData();
+        }
     }
 
     private void setLanguage() {
@@ -72,8 +73,9 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void initData() {
-
-        mArrayListStudy1 = ManageSharedPreferences.getArrayList(this);
+//        AppDataBase.getInstance(this).daoLearning1().deleteAll();
+        mArrayListStudy1 = (ArrayList<DafLearning1>) AppDataBase.getInstance(this).daoLearning1().getAllLearning();
+//        mArrayListStudy1 = ManageSharedPreferences.getArrayList(this);
     }
 
     private void startNextActivity() {

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.model.Daf;
+import com.example.model.DafLearning1;
 import com.example.myapp.R;
 
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ import java.util.ArrayList;
 public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder> {
     private LayoutInflater mInflater;
     private Context context;
-    private ArrayList<Daf> myListDaf;
+    private ArrayList<DafLearning1> myListDaf = new ArrayList<>();
 
-    public OneDafAdapter(Context context, ArrayList<Daf> myListDaf) {
+    public OneDafAdapter(Context context, ArrayList<DafLearning1> myListDaf) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.myListDaf = myListDaf;
@@ -63,7 +63,7 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
 
         }
 
-        public void setHolder(Daf mydaf) {
+        public void setHolder(DafLearning1 mydaf) {
             ifLernning.setChecked(false);
             masechet.setText(mydaf.getMasechet());
             numDaf.setText(" "+mydaf.getPageNumber()+ "");

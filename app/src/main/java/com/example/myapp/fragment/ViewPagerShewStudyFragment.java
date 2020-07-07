@@ -1,7 +1,6 @@
 package com.example.myapp.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,8 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.model.Daf;
-import com.example.myapp.R;
+import com.example.model.DafLearning1;
 import com.example.myapp.activity.SplashActivity;
 import com.example.myapp.adapters.ViewPagerDataLearningAdapter;
 import com.example.myapp.databinding.FragmentViewPagerShewStudyBinding;
@@ -33,14 +31,14 @@ public class ViewPagerShewStudyFragment extends Fragment {
     private ViewPagerDataLearningAdapter viewPagerDataLearningAdapter;
     private ArrayList<Fragment> myListDataLernen = new ArrayList<>();
     private OnFragmentInteractionListener mListener;
-    ArrayList<Daf> myList1 = new ArrayList<>();
+    ArrayList<DafLearning1> myList1 = new ArrayList<>();
 
     public ViewPagerShewStudyFragment() {
 
     }
 
 
-    public static ViewPagerShewStudyFragment newInstance(ArrayList<Daf>myList1) {
+    public static ViewPagerShewStudyFragment newInstance(ArrayList<DafLearning1>myList1) {
         ViewPagerShewStudyFragment fragment = new ViewPagerShewStudyFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(SplashActivity.KEY_EXTRA_List1, myList1);

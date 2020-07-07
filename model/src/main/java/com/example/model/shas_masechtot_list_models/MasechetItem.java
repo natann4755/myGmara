@@ -1,9 +1,6 @@
 package com.example.model.shas_masechtot_list_models;
 
-import com.example.model.Daf;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 public class MasechetItem {
 //    @SerializedName("pages")

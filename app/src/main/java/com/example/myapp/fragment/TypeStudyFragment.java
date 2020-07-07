@@ -3,14 +3,12 @@ package com.example.myapp.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.model.Daf;
+import com.example.model.DafLearning1;
 import com.example.myapp.R;
 import com.example.myapp.activity.SplashActivity;
 import com.example.myapp.databinding.FragmentTypeStudyBinding;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
 public class TypeStudyFragment extends Fragment {
     public static final String TAG = TypeStudyFragment.class.getSimpleName();
     FragmentTypeStudyBinding binding;
-    ArrayList<Daf> myList1 = new ArrayList<>();
+    ArrayList<DafLearning1> myList1 = new ArrayList<>();
     ViewPagerShewStudyFragment firstStudy ;
 
 
@@ -30,7 +28,7 @@ public class TypeStudyFragment extends Fragment {
     }
 
 
-    public static TypeStudyFragment newInstance(ArrayList<Daf> myList1) {
+    public static TypeStudyFragment newInstance(ArrayList<DafLearning1> myList1) {
         TypeStudyFragment fragment = new TypeStudyFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(SplashActivity.KEY_EXTRA_List1,myList1);

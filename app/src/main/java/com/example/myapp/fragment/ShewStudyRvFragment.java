@@ -10,8 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.model.Daf;
-import com.example.myapp.R;
+import com.example.model.DafLearning1;
 import com.example.myapp.activity.SplashActivity;
 import com.example.myapp.adapters.OneDafAdapter;
 import com.example.myapp.databinding.FragmentShewStudyRvBinding;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
  */
 public class ShewStudyRvFragment extends Fragment {
     FragmentShewStudyRvBinding binding;
-    ArrayList<Daf> myList1 = new ArrayList<>();
+    ArrayList<DafLearning1> myList1 = new ArrayList<>();
 
 
     public ShewStudyRvFragment() {
@@ -33,7 +32,7 @@ public class ShewStudyRvFragment extends Fragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static ShewStudyRvFragment newInstance(ArrayList<Daf>myList1) {
+    public static ShewStudyRvFragment newInstance(ArrayList<DafLearning1>myList1) {
         ShewStudyRvFragment fragment = new ShewStudyRvFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(SplashActivity.KEY_EXTRA_List1,myList1);

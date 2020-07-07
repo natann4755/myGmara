@@ -1,7 +1,7 @@
 package com.example.myapp.utils;
 
 import android.content.Context;
-import com.example.model.Daf;
+import com.example.model.DafLearning1;
 import com.example.model.Profile;
 
 
@@ -25,12 +25,12 @@ public class ManageSharedPreferences {
 
     }
 
-    public static void saveArrayList (ArrayList<Daf> list, Context context) {
+    public static void saveArrayList (ArrayList<DafLearning1> list, Context context) {
         InstanceSharedPreferences.getInstance(context)
                 .setArrayList(list, KEY_ListLearning);
     }
 
-    public static ArrayList<Daf> getArrayList(Context context){
+    public static ArrayList<DafLearning1> getArrayList(Context context){
         ArrayList mArrayList =  InstanceSharedPreferences.getInstance(context)
                 .getArrayList(KEY_ListLearning);
         return mArrayList;

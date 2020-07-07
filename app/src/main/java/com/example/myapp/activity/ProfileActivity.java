@@ -11,11 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-import com.example.model.Daf;
+import com.example.model.DafLearning1;
 import com.example.model.Profile;
 import com.example.model.shas_masechtot_list_models.AllShasItem;
 import com.example.myapp.R;
 import com.example.myapp.adapters.RecyclerViewStudyOptionsAdapter;
+import com.example.myapp.dataBase.AppDataBase;
 import com.example.myapp.databinding.ActivityProfileBinding;
 import com.example.myapp.interfaces.CreateTypeOfStudy;
 import com.example.myapp.utils.Language;
@@ -32,7 +33,7 @@ import static com.example.myapp.activity.SplashActivity.KEY_EXTRA_List1;
 
   public class ProfileActivity extends AppCompatActivity implements CreateTypeOfStudy {
     private ActivityProfileBinding binding;
-    private ArrayList <Daf> mListLearning = new ArrayList<>();
+    private ArrayList <DafLearning1> mListLearning = new ArrayList<>();
     private ArrayList <String> mStudyOptionsList = new ArrayList<>();
     private AllShasItem mAllShas;
     private Profile mProfile = new Profile(0);
@@ -83,16 +84,17 @@ import static com.example.myapp.activity.SplashActivity.KEY_EXTRA_List1;
 
     private void createLearningClicked(View v) {
         onRadioNumberOfReps();
-        initListLearning();
+//        initListLearning();
         alertDialogAreYouSure();
     }
 
     private void initListLearning() {
-
+        int id = 1;
         for (int i = 2; i <158 ; i++) {
-            mListLearning.add(new Daf("שבת",i));
+            mListLearning.add(new DafLearning1("שבת",i,id));
+            id++;
         }
-        ManageSharedPreferences.saveArrayList(mListLearning,getBaseContext());
+//        ManageSharedPreferences.saveArrayList(mListLearning,getBaseContext());
     }
 
     private void initListAllShah() {
@@ -114,7 +116,7 @@ import static com.example.myapp.activity.SplashActivity.KEY_EXTRA_List1;
                         ManageSharedPreferences.setProfile(mProfile,getBaseContext());
                         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
                         intent.putExtra(KEY_EXTRA_List1, mListLearning);
-                        startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                        startActivity(intent);
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -192,20 +194,23 @@ import static com.example.myapp.activity.SplashActivity.KEY_EXTRA_List1;
     @Override
     public void CreateListTypeOfStudy(String stringTypeOfStudy) {
         if (stringTypeOfStudy.equals("דף היומי")){
+            mStringTypeOfStudy = stringTypeOfStudy;
             CreateListAllShas();
+            AppDataBase.getInstance(this).daoLearning1().insertAllLearning(mListLearning);
         }
 
     }
 
       private void CreateListAllShas() {
+          int id = 1;
           for (int i = 0; i <mAllShas.getSeder().size() ; i++) {
               for (int j = 0; j <mAllShas.getSeder().get(i).getMasechet().size() ; j++) {
                   for (int k = 2; k <(mAllShas.getSeder().get(i).getMasechet().get(j).getPages()+2) ; k++) {
-                      mListLearning.add(new Daf(mAllShas.getSeder().get(i).getMasechet().get(j).getName(),k));
+                      mListLearning.add(new DafLearning1(mAllShas.getSeder().get(i).getMasechet().get(j).getName(),k,id));
+                      id++;
                   }
               }
           }
-          Daf d = mListLearning.get(322);
       }
   }
 
