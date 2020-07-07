@@ -1,33 +1,41 @@
 package com.example.model.shas_masechtot_list_models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class SederItem {
 
-//    @SerializedName("name")
+    @SerializedName("name")
     private String name;
 
-//    @SerializedName("masechet")
+    @SerializedName("masechtot")
     private List<MasechetItem> masechtot;
 
-    public String getName() {
-        return name;
-    }
+    private boolean isOpen = false;
 
     public SederItem(String name, List<MasechetItem> masechet) {
         this.name = name;
         this.masechtot = masechet;
     }
 
+    public boolean isOpen() { return isOpen; }
+
+    public void setOpen(boolean open) { isOpen = open; }
+
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public List<MasechetItem> getMasechet() {
+    public List<MasechetItem> getMasechtot() {
         return masechtot;
     }
 
-    public void setMasechet(List<MasechetItem> masechet) {
+    public void setMasechtot(List<MasechetItem> masechet) {
         this.masechtot = masechet;
     }
 }

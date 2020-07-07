@@ -3,7 +3,7 @@ package com.example.model.shas_masechtot_list_models;
 import java.io.Serializable;
 import java.util.List;
 
-public class AllShasItem implements Serializable {
+public class AllShasItem  {
 
 //    @SerializedName("seder")
     private List<SederItem> seder;

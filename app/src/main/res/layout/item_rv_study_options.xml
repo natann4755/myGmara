@@ -12,7 +12,26 @@
         tools:text="דף היומי"
         android:layout_centerInParent="true"
         android:textStyle="bold"
-        android:textSize="22sp"
-        />
+        android:textSize="22sp"/>
+
+    <LinearLayout
+        android:id="@+id/item_rv_study_rv_LL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/item_rv_RV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    </LinearLayout>
 
 </RelativeLayout>
