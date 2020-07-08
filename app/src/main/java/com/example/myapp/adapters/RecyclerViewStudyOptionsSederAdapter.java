@@ -58,13 +58,13 @@ public class RecyclerViewStudyOptionsSederAdapter extends RecyclerView.Adapter<R
             mMasechtotRecyclerView = itemView.findViewById(R.id.item_rv_RV);
 
             itemView.setOnClickListener(v -> {
-//                if (sederItem.isOpen()) {
-//                    sederItem.setOpen(false);
+                if (sederItem.isOpen()) {
+                    sederItem.setOpen(false);
 //                    mRvLinearLayout.setVisibility(View.GONE);
-//                } else {
-//                    sederItem.setOpen(true);
+                } else {
+                    sederItem.setOpen(true);
 //                    mItemRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-////                    mRecyclerViewStudyOptionsTalmudAdapter = new RecyclerViewStudyOptionsMasechetAdapter(mAllShasItem.getSeder(), mContext);
+//                    mRecyclerViewStudyOptionsTalmudAdapter = new RecyclerViewStudyOptionsMasechetAdapter(mAllShasItem.getSeder(), mContext);
 //                    mItemRecyclerView.setAdapter(mRecyclerViewStudyOptionsTalmudAdapter);
 //                    mRvLinearLayout.setVisibility(View.VISIBLE);
                 }
