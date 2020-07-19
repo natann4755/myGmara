@@ -50,7 +50,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_height="0dp"
         android:layout_weight="1">
 
@@ -72,37 +72,33 @@
             android:layout_height="wrap_content"
             android:gravity="center">
             <CheckBox
+                android:id="@+id/chazara_1_CB"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:buttonTint="#00b2ab"
+                android:checked="false"
                 android:layout_marginStart="20dp"
-                android:checked="true"
-                android:visibility="visible"/>
+                />
             <CheckBox
+                android:id="@+id/chazara_2_CB"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:buttonTint="#00b2ab"
+                android:checked="false"
                 android:layout_marginStart="20dp"
-                android:checked="true"
-                android:visibility="visible"/>
+                />
             <CheckBox
+                android:id="@+id/chazara_3_CB"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:buttonTint="#00b2ab"
                 android:layout_marginStart="20dp"
-                android:checked="true"
-                android:visibility="visible"/>
-            <CheckBox
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:buttonTint="#00b2ab"
-                android:layout_marginStart="20dp"
-                android:checked="true"
-                android:visibility="visible"/>
+                android:checked="false"
+               />
+
         </LinearLayout>
     </LinearLayout>
 

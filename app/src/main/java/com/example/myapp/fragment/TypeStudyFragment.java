@@ -41,6 +41,7 @@ public class TypeStudyFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             myList1 = getArguments().getParcelableArrayList(SplashActivity.KEY_EXTRA_List1);
+
         }
     }
 

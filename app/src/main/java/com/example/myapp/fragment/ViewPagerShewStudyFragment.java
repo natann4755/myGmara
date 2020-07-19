@@ -51,6 +51,7 @@ public class ViewPagerShewStudyFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             myList1 = getArguments().getParcelableArrayList(SplashActivity.KEY_EXTRA_List1);
+
         }
     }
 
@@ -71,9 +72,17 @@ public class ViewPagerShewStudyFragment extends Fragment {
         tabLayout.setupWithViewPager(myViewPager, true);
     }
     private ArrayList<Fragment> initMyListStudy() {
-        ShewStudyRvFragment myShewStudyRvFragment1 =  ShewStudyRvFragment.newInstance(myList1);
-        ShewStudyRvFragment myShewStudyRvFragment2 =  ShewStudyRvFragment.newInstance(myList1);
-        ShewStudyRvFragment myShewStudyRvFragment3 =  ShewStudyRvFragment.newInstance(myList1);
+
+        ShewStudyRvFragment myShewStudyRvFragment1;
+        if(myList1.size()>200){
+            myShewStudyRvFragment1 =  ShewStudyRvFragment.newInstance(myList1,true);
+        }
+        else {
+            myShewStudyRvFragment1 =  ShewStudyRvFragment.newInstance(myList1,false);
+        }
+
+        ShewStudyRvFragment myShewStudyRvFragment2 =  ShewStudyRvFragment.newInstance(myList1, false);
+        ShewStudyRvFragment myShewStudyRvFragment3 =  ShewStudyRvFragment.newInstance(myList1, false);
         myListDataLernen.add(myShewStudyRvFragment1);
         myListDataLernen.add(myShewStudyRvFragment2);
         myListDataLernen.add(myShewStudyRvFragment3);

@@ -16,10 +16,11 @@ import com.example.model.Profile;
 import com.example.model.shas_masechtot_list_models.AllShasItem;
 import com.example.model.shas_masechtot_list_models.SederItem;
 import com.example.myapp.R;
+import com.example.myapp.adapters.RecyclerViewStudyOptionsMasechetAdapter;
 import com.example.myapp.adapters.RecyclerViewStudyOptionsSederAdapter;
 import com.example.myapp.dataBase.AppDataBase;
 import com.example.myapp.databinding.ActivityProfileBinding;
-import com.example.myapp.interfaces.CreateTypeOfStudy;
+
 import com.example.myapp.utils.ManageSharedPreferences;
 import com.google.gson.Gson;
 
@@ -32,7 +33,7 @@ import java.util.Objects;
 
 import static com.example.myapp.activity.SplashActivity.KEY_EXTRA_List1;
 
-public class ProfileActivity extends AppCompatActivity implements CreateTypeOfStudy {
+public class ProfileActivity extends AppCompatActivity implements RecyclerViewStudyOptionsMasechetAdapter.CreateTypeOfStudy {
 
     private ActivityProfileBinding binding;
     private ArrayList<DafLearning1> mListLearning = new ArrayList<>();
@@ -43,6 +44,7 @@ public class ProfileActivity extends AppCompatActivity implements CreateTypeOfSt
     private RecyclerViewStudyOptionsSederAdapter mRecyclerViewStudyOptionsAdapter;
     private TextView studyOptionDafHyomy;
     private TextView studyOptionTalmudBavly;
+    private boolean mOptionTalmudBavlyOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +73,18 @@ public class ProfileActivity extends AppCompatActivity implements CreateTypeOfSt
 
     private void initListener() {
         studyOptionDafHyomy.setOnClickListener(v -> {
-            CreateListTypeOfStudy("דף היומי");
+            CreateListTypeOfStudy("דף היומי",2711);
         });
-        studyOptionTalmudBavly.setOnClickListener(v -> initRecyclerView());
+        studyOptionTalmudBavly.setOnClickListener(v -> {
+            if (mOptionTalmudBavlyOpen == false){
+                mOptionTalmudBavlyOpen = true;
+                initRecyclerView();
+            }else {
+                mOptionTalmudBavlyOpen = false;
+                myRecyclerViewStudyOptions.setVisibility(View.GONE);
+            }
+
+        });
         binding.ProfileCreateLearningBU.setOnClickListener(v -> createLearningClicked(v));
     }
 
@@ -115,6 +126,7 @@ public class ProfileActivity extends AppCompatActivity implements CreateTypeOfSt
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         ManageSharedPreferences.setProfile(mProfile, getBaseContext());
+                        AppDataBase.getInstance(getBaseContext()).daoLearning1().insertAllLearning(mListLearning);
                         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
                         intent.putExtra(KEY_EXTRA_List1, mListLearning);
                         startActivity(intent);
@@ -137,6 +149,7 @@ public class ProfileActivity extends AppCompatActivity implements CreateTypeOfSt
     }
 
     private void CreateListAllShas() {
+        mListLearning.clear();
         int id = 1;
         for (int i = 0; i < mAllShas.getSeder().size(); i++) {
             for (int j = 0; j < mAllShas.getSeder().get(i).getMasechtot().size(); j++) {
@@ -145,6 +158,15 @@ public class ProfileActivity extends AppCompatActivity implements CreateTypeOfSt
                     id++;
                 }
             }
+        }
+    }
+
+    private void CreateListMasechet(String masechetName, int pages) {
+        mListLearning.clear();
+        int id = 1;
+        for (int i = 2 ; i < (pages+2) ; i++) {
+            mListLearning.add(new DafLearning1(masechetName, i, id));
+            id++;
         }
     }
 
@@ -160,11 +182,13 @@ public class ProfileActivity extends AppCompatActivity implements CreateTypeOfSt
     }
 
     @Override
-    public void CreateListTypeOfStudy(String stringTypeOfStudy) {
+    public void CreateListTypeOfStudy(String stringTypeOfStudy , int masechetPage) {
         if (stringTypeOfStudy.equals("דף היומי")) {
             mStringTypeOfStudy = stringTypeOfStudy;
             CreateListAllShas();
-            AppDataBase.getInstance(this).daoLearning1().insertAllLearning(mListLearning);
+        }else {
+            mStringTypeOfStudy = stringTypeOfStudy;
+            CreateListMasechet(stringTypeOfStudy, masechetPage);
         }
     }
 }

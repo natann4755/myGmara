@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.model.shas_masechtot_list_models.AllShasItem;
 import com.example.model.shas_masechtot_list_models.SederItem;
 import com.example.myapp.R;
-import com.example.myapp.interfaces.CreateTypeOfStudy;
 
 import java.util.ArrayList;
 
@@ -49,24 +48,26 @@ public class RecyclerViewStudyOptionsSederAdapter extends RecyclerView.Adapter<R
     public class Holder extends RecyclerView.ViewHolder {
         private TextView study;
         private SederItem sederItem;
+        private LinearLayout mRvLinearLayout;
         private RecyclerView mMasechtotRecyclerView;
-        private RecyclerViewStudyOptionsMasechetAdapter mRecyclerViewStudyOptionsTalmudAdapter;
+        private RecyclerViewStudyOptionsMasechetAdapter mRecyclerViewStudyOptionsMasechetAdapter;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
             study = itemView.findViewById(R.id.item_rv_study_TV);
             mMasechtotRecyclerView = itemView.findViewById(R.id.item_rv_RV);
+            mRvLinearLayout = itemView.findViewById(R.id.item_rv_study_rv_LL);
 
             itemView.setOnClickListener(v -> {
                 if (sederItem.isOpen()) {
                     sederItem.setOpen(false);
-//                    mRvLinearLayout.setVisibility(View.GONE);
+                    mRvLinearLayout.setVisibility(View.GONE);
                 } else {
                     sederItem.setOpen(true);
-//                    mItemRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-//                    mRecyclerViewStudyOptionsTalmudAdapter = new RecyclerViewStudyOptionsMasechetAdapter(mAllShasItem.getSeder(), mContext);
-//                    mItemRecyclerView.setAdapter(mRecyclerViewStudyOptionsTalmudAdapter);
-//                    mRvLinearLayout.setVisibility(View.VISIBLE);
+                    mMasechtotRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+                    mRecyclerViewStudyOptionsMasechetAdapter = new RecyclerViewStudyOptionsMasechetAdapter(sederItem.getMasechtot(), mContext);
+                    mMasechtotRecyclerView.setAdapter(mRecyclerViewStudyOptionsMasechetAdapter);
+                    mRvLinearLayout.setVisibility(View.VISIBLE);
                 }
             });
         }

@@ -18,6 +18,12 @@ public interface DaoLearning1 {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAllLearning(Collection<DafLearning1> AllLearning);
 
+    @Query("UPDATE DafLearning1 SET isLearning = :isLearning WHERE masechet = :masechet and pageNumber = :page")
+    void updateIsLearning(boolean isLearning , String masechet , int page);
+
+    @Query("UPDATE DafLearning1 SET chazara = :chazara WHERE masechet = :masechet and pageNumber = :page")
+    void updateNumOfChazara(int chazara , String masechet , int page);
+
     @Query("DELETE FROM DafLearning1")
     void deleteAll();
 }
