@@ -153,7 +153,7 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
             masechet.setText(mDaf.getMasechet());
             numDaf.setText(ConvertIntToPage.intToPage(mDaf.getPageNumber()));
             initChazara(mDaf.getChazara());
-            date.setText("א תמוז תשעט");
+            date.setText(mDaf.getPageDate());
         }
         private void initChazara(int chazara) {
             if (chazara == 1){

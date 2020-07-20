@@ -28,6 +28,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Objects;
 
 
@@ -148,24 +149,57 @@ public class ProfileActivity extends AppCompatActivity implements RecyclerViewSt
                 .setNegativeButton("No", dialogClickListener).show();
     }
 
-    private void CreateListAllShas() {
+    private void createListAllShas() {
+        Calendar startDafHayomi = findDateOfStartDafHayomi();
         mListLearning.clear();
         int id = 1;
         for (int i = 0; i < mAllShas.getSeder().size(); i++) {
             for (int j = 0; j < mAllShas.getSeder().get(i).getMasechtot().size(); j++) {
                 for (int k = 2; k < (mAllShas.getSeder().get(i).getMasechtot().get(j).getPages() + 2); k++) {
-                    mListLearning.add(new DafLearning1(mAllShas.getSeder().get(i).getMasechtot().get(j).getName(), k, id));
+                    DafLearning1 mPage = new DafLearning1(mAllShas.getSeder().get(i).getMasechtot().get(j).getName(), k,"דף היומי" ,id);
+                    mPage.setPageDate(startDafHayomi.get(Calendar.DAY_OF_MONTH) + "/" + (startDafHayomi.get(Calendar.MONTH) + 1) + "/" + startDafHayomi.get(Calendar.YEAR));
+                    mListLearning.add(mPage);
+                    startDafHayomi.add(Calendar.DATE, 1);
                     id++;
                 }
             }
         }
     }
 
+    private Calendar findDateOfStartDafHayomi() {
+        Calendar today = Calendar.getInstance();
+       ArrayList<Calendar> startDafHyomiDates =  initListStartDafHyomiDates();
+       if (today.after(startDafHyomiDates.get(0)) && today.before(startDafHyomiDates.get(1))){
+           return startDafHyomiDates.get(0);
+       }
+       else if (today.after(startDafHyomiDates.get(1)) && today.before(startDafHyomiDates.get(2))){
+            return startDafHyomiDates.get(1);
+        }else {
+           return startDafHyomiDates.get(2);
+       }
+    }
+
+    private ArrayList<Calendar> initListStartDafHyomiDates() {
+        ArrayList <Calendar> listStartDafHyomiDates = new ArrayList<>();
+        listStartDafHyomiDates.add(createCalender(2012,7,3));
+        listStartDafHyomiDates.add(createCalender(2020,0,5));
+        listStartDafHyomiDates.add(createCalender(2027,5,8));
+        return listStartDafHyomiDates;
+    }
+
+    private Calendar createCalender(int year, int month, int day) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR,year);
+        c.set(Calendar.MONTH,month);
+        c.set(Calendar.DAY_OF_MONTH,day);
+        return c;
+    }
+
     private void CreateListMasechet(String masechetName, int pages) {
         mListLearning.clear();
         int id = 1;
         for (int i = 2 ; i < (pages+2) ; i++) {
-            mListLearning.add(new DafLearning1(masechetName, i, id));
+            mListLearning.add(new DafLearning1(masechetName, i,masechetName, id));
             id++;
         }
     }
@@ -185,7 +219,7 @@ public class ProfileActivity extends AppCompatActivity implements RecyclerViewSt
     public void CreateListTypeOfStudy(String stringTypeOfStudy , int masechetPage) {
         if (stringTypeOfStudy.equals("דף היומי")) {
             mStringTypeOfStudy = stringTypeOfStudy;
-            CreateListAllShas();
+            createListAllShas();
         }else {
             mStringTypeOfStudy = stringTypeOfStudy;
             CreateListMasechet(stringTypeOfStudy, masechetPage);

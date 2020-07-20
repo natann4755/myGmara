@@ -7,6 +7,8 @@ import android.os.Parcelable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Calendar;
+
 @Entity
 public class DafLearning1 implements Parcelable {
     @PrimaryKey
@@ -17,12 +19,8 @@ public class DafLearning1 implements Parcelable {
     private int chazara;
     private boolean isLearningPage1;
     private boolean isLearningPage2;
-
-    public DafLearning1(String masechet, int pageNumber, int id ) {
-        this.masechet = masechet;
-        this.pageNumber = pageNumber;
-        this.id = id;
-    }
+    private String typeOfStudy;
+    private String pageDate;
 
 
     protected DafLearning1(Parcel in) {
@@ -33,6 +31,8 @@ public class DafLearning1 implements Parcelable {
         chazara = in.readInt();
         isLearningPage1 = in.readByte() != 0;
         isLearningPage2 = in.readByte() != 0;
+        typeOfStudy = in.readString();
+        pageDate = in.readString();
     }
 
     public static final Creator<DafLearning1> CREATOR = new Creator<DafLearning1>() {
@@ -46,6 +46,32 @@ public class DafLearning1 implements Parcelable {
             return new DafLearning1[size];
         }
     };
+
+    public String getTypeOfStudy() {
+        return typeOfStudy;
+    }
+
+    public void setTypeOfStudy(String typeOfStudy) {
+        this.typeOfStudy = typeOfStudy;
+    }
+
+    public String getPageDate() {
+        return pageDate;
+    }
+
+    public void setPageDate(String pageDate) {
+        this.pageDate = pageDate;
+    }
+
+    public DafLearning1(String masechet, int pageNumber, String typeOfStudy, int id ) {
+        this.masechet = masechet;
+        this.pageNumber = pageNumber;
+        this.id = id;
+        this.typeOfStudy =typeOfStudy;
+    }
+
+
+
 
     public String getMasechet() {
         return masechet;
@@ -118,5 +144,7 @@ public class DafLearning1 implements Parcelable {
         dest.writeInt(chazara);
         dest.writeByte((byte) (isLearningPage1 ? 1 : 0));
         dest.writeByte((byte) (isLearningPage2 ? 1 : 0));
+        dest.writeString(typeOfStudy);
+        dest.writeString(pageDate);
     }
 }

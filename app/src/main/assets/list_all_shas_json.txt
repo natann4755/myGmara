@@ -29,6 +29,10 @@
                     "masechet": "פסחים",
                     "pages" : 120
                   },
+                   {
+                   "masechet": "שקלים",
+                   "pages" : 21
+                   },
                   {
                     "masechet": "ראש השנה",
                     "pages" : 34

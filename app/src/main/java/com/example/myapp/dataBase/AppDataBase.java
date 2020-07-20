@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.model.DafLearning1;
 
-@Database(entities = {DafLearning1.class}, version = 1)
+@Database(entities = {DafLearning1.class}, version = 3,exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
     public static final String DATABASE_NAME = "DataBaseLearning";
     static AppDataBase INSTANCE;
