@@ -32,7 +32,7 @@ public class RecyclerViewStudyOptionsMasechetAdapter extends RecyclerView.Adapte
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_one_masechet, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_one_masechet,parent,false);
         return new RecyclerViewStudyOptionsMasechetAdapter.Holder(v);
     }
 

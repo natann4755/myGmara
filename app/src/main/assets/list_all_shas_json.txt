@@ -30,10 +30,6 @@
                     "pages" : 120
                   },
                   {
-                    "masechet": "פסחים",
-                    "pages" : 21
-                  },
-                  {
                     "masechet": "ראש השנה",
                     "pages" : 34
                   },
