@@ -42,6 +42,8 @@ public class AllMasechtotAdapter extends RecyclerView.Adapter<AllMasechtotAdapte
         public int getItemCount() {
             return allMasechtot.size();
         }
+
+
         public class ViewHolder extends RecyclerView.ViewHolder  {
 
             TextView masechet;

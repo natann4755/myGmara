@@ -8,7 +8,6 @@ import android.os.Bundle;
 import com.example.model.DafLearning1;
 import com.example.myapp.R;
 import com.example.myapp.fragment.TypeStudyFragment;
-import com.example.myapp.fragment.ViewPagerShewStudyFragment;
 
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import static com.example.myapp.activity.SplashActivity.KEY_EXTRA_List1;
 
 
-public class MainActivity extends AppCompatActivity implements ViewPagerShewStudyFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity  {
 
     ArrayList<DafLearning1> myList1;
 //    ArrayList<Daf>  myList2 = new ArrayList<>();

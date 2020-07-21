@@ -127,6 +127,7 @@ public class ProfileActivity extends AppCompatActivity implements RecyclerViewSt
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         ManageSharedPreferences.setProfile(mProfile, getBaseContext());
+                        ManageSharedPreferences.setHaveLearning(true, getBaseContext());
                         AppDataBase.getInstance(getBaseContext()).daoLearning1().insertAllLearning(mListLearning);
                         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
                         intent.putExtra(KEY_EXTRA_List1, mListLearning);

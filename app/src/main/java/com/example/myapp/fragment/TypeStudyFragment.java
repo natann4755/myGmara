@@ -20,7 +20,7 @@ public class TypeStudyFragment extends Fragment {
     public static final String TAG = TypeStudyFragment.class.getSimpleName();
     FragmentTypeStudyBinding binding;
     ArrayList<DafLearning1> myList1 = new ArrayList<>();
-    ViewPagerShewStudyFragment firstStudy ;
+    ShewStudyRvFragment firstStudy;
 
 
     public TypeStudyFragment() {
@@ -50,14 +50,15 @@ public class TypeStudyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentTypeStudyBinding.inflate(inflater, container, false);
-        firstStudy = ViewPagerShewStudyFragment.newInstance(myList1) ;
-        openFragment(firstStudy,ViewPagerShewStudyFragment.TAG );
+        firstStudy = ShewStudyRvFragment.newInstance(myList1) ;
+        openFragment(firstStudy,ShewStudyRvFragment.TAG );
         initViews();
         return binding.getRoot();
     }
     private void initViews() {
 
-        binding.FTPFIRSTSTUDYBUTTON.setOnClickListener(v -> openFragment(firstStudy,ViewPagerShewStudyFragment.TAG ));
+        binding.FTPFIRSTSTUDYBUTTON.setOnClickListener(v -> openFragment(firstStudy,ShewStudyRvFragment.TAG ));
+        binding.FTPFIRSTSTUDYBUTTON.setText(myList1.get(0).getTypeOfStudy());
 //        binding.FTPTOWSTUDYBUTTON.setOnClickListener(v -> openFragment(firstStudy,ViewPagerShewStudyFragment.TAG ));
 //        binding.FTPTHREETSTUDYBUTTON.setOnClickListener(v -> openFragment(firstStudy,ViewPagerShewStudyFragment.TAG ));
     }

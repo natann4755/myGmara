@@ -15,6 +15,7 @@ import com.example.myapp.activity.SplashActivity;
 import com.example.myapp.adapters.AllMasechtotAdapter;
 import com.example.myapp.adapters.OneDafAdapter;
 import com.example.myapp.databinding.FragmentShewStudyRvBinding;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
@@ -24,9 +25,9 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter.NameMasechet {
+    public static final String TAG = ShewStudyRvFragment.class.getSimpleName();
     private FragmentShewStudyRvBinding binding;
     private ArrayList<DafLearning1> myList1 = new ArrayList<>();
-    private boolean showListMasechtot;
     private OneDafAdapter myAdapter;
 
 
@@ -35,11 +36,10 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
     }
 
     // TODO: Rename and change types and number of parameters
-    public static ShewStudyRvFragment newInstance(ArrayList<DafLearning1>myList1 , boolean showListMasechtot) {
+    public static ShewStudyRvFragment newInstance(ArrayList<DafLearning1>myList1 ) {
         ShewStudyRvFragment fragment = new ShewStudyRvFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(SplashActivity.KEY_EXTRA_List1,myList1);
-        args.putBoolean("KEY_showListMasechtot",showListMasechtot);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,7 +49,6 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             myList1 = getArguments().getParcelableArrayList(SplashActivity.KEY_EXTRA_List1);
-            showListMasechtot = getArguments().getBoolean("KEY_showListMasechtot");
         }
     }
 
@@ -57,10 +56,9 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentShewStudyRvBinding.inflate(inflater, container, false);
-        if(showListMasechtot){
-            initReciclerviewMasechtot();
-            binding.showStudyRVMasechtot.setVisibility(View.VISIBLE);
-        }
+        initTabLayout();
+        initReciclerviewMasechtot();
+        binding.showStudyRVMasechtot.setVisibility(View.VISIBLE);
         initReciclerviewDapim();
         return binding.getRoot();
     }
@@ -91,6 +89,55 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
         }
 
     }
+    private void initTabLayout() {
+        TabLayout tabLayout = binding.tabLayoutTypeList;
+        TabLayout.Tab tab1 = tabLayout.newTab();
+        TabLayout.Tab tab2 = tabLayout.newTab();
+        TabLayout.Tab tab3 = tabLayout.newTab();
+        tab1.setText("הכל");
+        tab2.setText("למדתי");
+        tab3.setText("דילגתי");
+        tabLayout.addTab(tab1);
+        tabLayout.addTab(tab2);
+        tabLayout.addTab(tab3);
+        setListenerOfTabLayout(tabLayout);
+
+    }
+
+    private void setListenerOfTabLayout(TabLayout tabLayout) {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int tabSelected = tab.getPosition();
+                if(tabSelected==0){
+                    binding.showStudyRVMasechtot.setVisibility(View.VISIBLE);
+                    myAdapter.filterAllDapim();
+                }
+                if(tabSelected==1) {
+                    binding.showStudyRVMasechtot.setVisibility(View.GONE);
+                    myAdapter.filterLearnet();
+                }
+                if(tabSelected==2) {
+                    binding.showStudyRVMasechtot.setVisibility(View.GONE);
+                    myAdapter.filterSkipt();
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+
+
 
     @Override
     public void nameMasechet(String nameMasechet) {

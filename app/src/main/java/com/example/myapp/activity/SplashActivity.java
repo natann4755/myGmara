@@ -14,12 +14,11 @@ import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity {
 
-    public static String KEY_EXTRAProfile = "KEYmyProfile";
     public static String KEY_EXTRA_List1 = "KEY_EXTRA_List1";
     public static String KEY_EXTRA_List2 = "KEY_EXTRA_List2";
     public static String KEY_EXTRA_List3 = "KEY_EXTRA_List3";
 
-    private boolean isFirstTime = true;
+    private boolean isHaveLearning;
     private Profile mProfile;
     private ArrayList <DafLearning1> mArrayListStudy1;
     private ArrayList  mArrayListStudy2;
@@ -34,19 +33,17 @@ public class SplashActivity extends AppCompatActivity {
         setLanguage();
 
         moveToNextActivity();
-        if (!isFirstTime) {
+        if (isHaveLearning) {
             initData();
         }
     }
 
     private void isFirstTime() {
-        mProfile = ManageSharedPreferences.getProfile(getBaseContext());
-        if (mProfile != null){
-            isFirstTime = false;
-        }
+        isHaveLearning = ManageSharedPreferences.getHaveLearning(getBaseContext());
     }
 
     private void setLanguage() {
+        mProfile = ManageSharedPreferences.getProfile(getBaseContext());
         if (mProfile == null) { return; }
         Language.setAppLanguage(mProfile.getLanguage(), getBaseContext());
     }
@@ -68,12 +65,11 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void startNextActivity() {
-        if (isFirstTime){
+        if (!isHaveLearning){
             startActivity(new Intent(SplashActivity.this, ProfileActivity.class));
             finish();
         }else {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-            intent.putExtra(KEY_EXTRAProfile, mProfile);
             intent.putExtra(KEY_EXTRA_List1, mArrayListStudy1);
             intent.putExtra(KEY_EXTRA_List2, mArrayListStudy2);
             intent.putExtra(KEY_EXTRA_List3, mArrayListStudy3);

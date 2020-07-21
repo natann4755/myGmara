@@ -56,7 +56,13 @@ public class InstanceSharedPreferences {
         editor.apply();
     }
 
-    public void setProperty(String key, Profile value) {
+    public void setHaveLearning(String key, boolean value) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    public void setProfile(String key, Profile value) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         String json = gson.toJson(value);
         editor.putString(key, json);
@@ -76,6 +82,10 @@ public class InstanceSharedPreferences {
 
 
     public boolean getProperty(String key, boolean defValue) {
+        return mSharedPreferences.getBoolean(key, defValue);
+    }
+
+    public boolean getHaveLearning(String key, boolean defValue) {
         return mSharedPreferences.getBoolean(key, defValue);
     }
 

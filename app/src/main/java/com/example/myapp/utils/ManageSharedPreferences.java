@@ -9,12 +9,13 @@ import java.util.ArrayList;
 
 public class ManageSharedPreferences {
     public static String KEY_haveProfile = "KEYisConnected";
+    public static String KEY_haveLearning = "KEY_haveLearning";
     public static String KEY_ListLearning = "ListLearning";
 
 
     public static void setProfile (Profile profile, Context context) {
 
-        InstanceSharedPreferences.getInstance(context).setProperty(KEY_haveProfile, profile);
+        InstanceSharedPreferences.getInstance(context).setProfile(KEY_haveProfile, profile);
 
     }
 
@@ -22,6 +23,19 @@ public class ManageSharedPreferences {
         Profile profile = InstanceSharedPreferences.getInstance(context)
                 .getProfile(KEY_haveProfile);
         return profile;
+
+    }
+
+    public static void setHaveLearning (boolean haveLearning, Context context) {
+
+        InstanceSharedPreferences.getInstance(context).setHaveLearning(KEY_haveLearning, haveLearning);
+
+    }
+
+    public static boolean getHaveLearning(Context context) {
+        boolean haveLearning = InstanceSharedPreferences.getInstance(context)
+                .getHaveLearning(KEY_haveLearning,false);
+        return haveLearning;
 
     }
 

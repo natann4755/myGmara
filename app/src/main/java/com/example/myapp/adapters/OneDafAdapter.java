@@ -5,21 +5,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.model.DafLearning1;
+import com.example.model.Profile;
 import com.example.myapp.R;
 import com.example.myapp.dataBase.AppDataBase;
 import com.example.myapp.utils.ConvertIntToPage;
+import com.example.myapp.utils.ManageSharedPreferences;
 
 import java.util.ArrayList;
 
 public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder> {
     private LayoutInflater mInflater;
     private Context context;
+    private Profile mProfile;
     private ArrayList<DafLearning1> myListALLDaf = new ArrayList<>();
     private ArrayList<DafLearning1> myListDaf = new ArrayList<>();
 
@@ -30,7 +34,11 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
         this.mInflater = LayoutInflater.from(context);
         this.myListALLDaf = myListDaf;
         this.myListDaf.addAll(myListALLDaf);
+        initProfile();
+
     }
+
+
 
     @NonNull
     @Override
@@ -50,6 +58,10 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
         return myListDaf.size();
     }
 
+    private void initProfile() {
+        mProfile = ManageSharedPreferences.getProfile(context);
+    }
+
     public void filterAllMasechtot(String myNameMasechet){
         myListFilterDaf.clear();
         for (int i = 0; i <myListALLDaf.size() ; i++) {
@@ -62,6 +74,34 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
+    public void filterLearnet(){
+        myListFilterDaf.clear();
+        for (int i = 0; i <myListALLDaf.size() ; i++) {
+            if (myListALLDaf.get(i).isLearning()) {
+                myListFilterDaf.add(myListALLDaf.get(i));
+            }
+        }
+        myListDaf.clear();
+        myListDaf.addAll(myListFilterDaf);
+        notifyDataSetChanged();
+    }
+    public void filterSkipt(){
+        myListFilterDaf.clear();
+        for (int i = 0; i <myListALLDaf.size() ; i++) {
+            if (!myListALLDaf.get(i).isLearning()) {
+                myListFilterDaf.add(myListALLDaf.get(i));
+            }
+        }
+        myListDaf.clear();
+        myListDaf.addAll(myListFilterDaf);
+        notifyDataSetChanged();
+    }
+    public void filterAllDapim(){
+        myListDaf.clear();
+        myListDaf.addAll(myListALLDaf);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemViewType(int position) {
         return position;
@@ -69,10 +109,11 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
 
 
     public class ViewHolder extends RecyclerView.ViewHolder  {
-        CheckBox ifLernning;
+        CheckBox ifLearning;
         TextView masechet;
         TextView numDaf;
         TextView date;
+        LinearLayout linearLayoutChazara;
         CheckBox chazara1;
         CheckBox chazara2;
         CheckBox chazara3;
@@ -81,16 +122,22 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
 
         ViewHolder(View itemView) {
             super(itemView);
-            ifLernning = itemView.findViewById(R.id.one_daf_checkbox);
+            ifLearning = itemView.findViewById(R.id.one_daf_checkbox);
             masechet = itemView.findViewById(R.id.one_daf_Tv_masechet);
             numDaf = itemView.findViewById(R.id.one_daf_Tv_numPage);
             date = itemView.findViewById((R.id.one_daf_Tv_date));
+            linearLayoutChazara = itemView.findViewById((R.id.one_daf_chazara_LL));
             chazara1 = itemView.findViewById((R.id.chazara_1_CB));
             chazara2 = itemView.findViewById((R.id.chazara_2_CB));
             chazara3 = itemView.findViewById((R.id.chazara_3_CB));
+            initNumOfChazara();
 
-            ifLernning.setOnClickListener(v -> {
-                AppDataBase.getInstance(context).daoLearning1().updateIsLearning(ifLernning.isChecked(), mDaf.getMasechet(),mDaf.getPageNumber());
+            ifLearning.setOnClickListener(v -> {
+                if (!ifLearning.isChecked()){
+                    if (chazara1.isChecked()){chazara1.performClick();}
+                }
+                AppDataBase.getInstance(context).daoLearning1().updateIsLearning(ifLearning.isChecked(), mDaf.getMasechet(),mDaf.getPageNumber());
+                updateListIfLearning(ifLearning.isChecked());
             });
 
             chazara1.setOnClickListener(v -> {
@@ -116,6 +163,16 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
             });
         }
 
+        private void updateListIfLearning(boolean checked) {
+            for (int i = 0; i <myListALLDaf.size() ; i++) {
+                if (myListALLDaf.get(i).getMasechet().equals(mDaf.getMasechet()) && myListALLDaf.get(i).getPageNumber() == mDaf.getPageNumber()){
+                    myListALLDaf.get(i).setLearning(checked);
+                    return;
+                }
+            }
+        }
+
+
         private void ListenerChazara(int chazara) {
             switch(chazara) {
                 case 0:
@@ -125,6 +182,9 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
                     break;
                 case 1:
                     UpdateListAndDB(1);
+                    if (!ifLearning.isChecked()){
+                        ifLearning.performClick();
+                    }
                     chazara2.setChecked(false);
                     chazara3.setChecked(false);
                     break;
@@ -132,43 +192,85 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
                     chazara1.setChecked(true);
                     UpdateListAndDB(2);
                     chazara3.setChecked(false);
+                    if (!ifLearning.isChecked()){
+                        ifLearning.performClick();
+                    }
                     break;
                 case 3:
                     chazara1.setChecked(true);
                     chazara2.setChecked(true);
                     UpdateListAndDB(3);
+                    if (!ifLearning.isChecked()){
+                        ifLearning.performClick();
+                    }
                     break;
             }
         }
 
         private void UpdateListAndDB(int chazara) {
             AppDataBase.getInstance(context).daoLearning1().updateNumOfChazara(chazara,mDaf.getMasechet(), mDaf.getPageNumber());
-//            updataArrey
+            updateListInChazara(chazara);
+        }
+
+        private void updateListInChazara(int chazara) {
+            for (int i = 0; i <myListDaf.size() ; i++) {
+                if (myListALLDaf.get(i).getMasechet().equals(mDaf.getMasechet()) && myListALLDaf.get(i).getPageNumber() == mDaf.getPageNumber()){
+                    myListALLDaf.get(i).setChazara(chazara);
+                    return;
+                }
+            }
+        }
+
+        private void initNumOfChazara() {
+            int numOfChazara = mProfile.getNumberOfReps();
+            switch(numOfChazara) {
+                case 0:
+                 linearLayoutChazara.setVisibility(View.GONE);
+                    break;
+                case 1:
+                    chazara2.setVisibility(View.GONE);
+                    chazara3.setVisibility(View.GONE);
+                    break;
+                case 2:
+                    chazara3.setVisibility(View.GONE);
+                    break;
+            }
         }
 
 
         public void setHolder(DafLearning1 mDaf) {
             this.mDaf = mDaf;
-            ifLernning.setChecked(mDaf.isLearning());
+            ifLearning.setChecked(mDaf.isLearning());
             masechet.setText(mDaf.getMasechet());
             numDaf.setText(ConvertIntToPage.intToPage(mDaf.getPageNumber()));
             initChazara(mDaf.getChazara());
             date.setText(mDaf.getPageDate());
         }
         private void initChazara(int chazara) {
-            if (chazara == 1){
-                chazara1.setChecked(true);
-            }
-            if (chazara == 2){
-                chazara1.setChecked(true);
-                chazara2.setChecked(true);
-            }
-            if (chazara == 3){
-                chazara1.setChecked(true);
-                chazara2.setChecked(true);
-                chazara3.setChecked(true);
+            switch(chazara) {
+                case 0:
+                    chazara1.setChecked(false);
+                    chazara2.setChecked(false);
+                    chazara3.setChecked(false);
+                    break;
+                case 1:
+                    chazara1.setChecked(true);
+                    chazara2.setChecked(false);
+                    chazara3.setChecked(false);
+                    break;
+                case 2:
+                    chazara1.setChecked(true);
+                    chazara2.setChecked(true);
+                    chazara3.setChecked(false);
+                    break;
+                case 3:
+                    chazara1.setChecked(true);
+                    chazara2.setChecked(true);
+                    chazara3.setChecked(true);
+                    break;
             }
         }
+
     }
 }
 
