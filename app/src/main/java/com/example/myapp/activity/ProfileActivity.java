@@ -184,6 +184,7 @@ public class ProfileActivity extends AppCompatActivity implements RecyclerViewSt
         listStartDafHyomiDates.add(createCalender(2012,7,3));
         listStartDafHyomiDates.add(createCalender(2020,0,5));
         listStartDafHyomiDates.add(createCalender(2027,5,8));
+//        add more machzorim!!!!!!!!!!!!!!!!!!
         return listStartDafHyomiDates;
     }
 
