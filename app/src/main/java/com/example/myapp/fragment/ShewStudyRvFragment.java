@@ -57,8 +57,10 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
                              Bundle savedInstanceState) {
         binding = FragmentShewStudyRvBinding.inflate(inflater, container, false);
         initTabLayout();
-        initReciclerviewMasechtot();
-        binding.showStudyRVMasechtot.setVisibility(View.VISIBLE);
+        if (myList1.size()>2000) {
+            initReciclerviewMasechtot();
+            binding.showStudyRVMasechtot.setVisibility(View.VISIBLE);
+        }
         initReciclerviewDapim();
         return binding.getRoot();
     }

@@ -17,15 +17,16 @@
 
     <LinearLayout
         android:id="@+id/item_rv_study_rv_LL"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal">
 
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/item_rv_RV"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="1000dp"
         />
 

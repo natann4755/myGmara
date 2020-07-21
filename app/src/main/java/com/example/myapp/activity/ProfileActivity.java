@@ -22,6 +22,7 @@ import com.example.myapp.dataBase.AppDataBase;
 import com.example.myapp.databinding.ActivityProfileBinding;
 
 import com.example.myapp.utils.ManageSharedPreferences;
+import com.example.myapp.utils.UtilsCalender;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -158,7 +159,8 @@ public class ProfileActivity extends AppCompatActivity implements RecyclerViewSt
             for (int j = 0; j < mAllShas.getSeder().get(i).getMasechtot().size(); j++) {
                 for (int k = 2; k < (mAllShas.getSeder().get(i).getMasechtot().get(j).getPages() + 2); k++) {
                     DafLearning1 mPage = new DafLearning1(mAllShas.getSeder().get(i).getMasechtot().get(j).getName(), k,"דף היומי" ,id);
-                    mPage.setPageDate(startDafHayomi.get(Calendar.DAY_OF_MONTH) + "/" + (startDafHayomi.get(Calendar.MONTH) + 1) + "/" + startDafHayomi.get(Calendar.YEAR));
+//                    mPage.setPageDate(startDafHayomi.get(Calendar.DAY_OF_MONTH) + "/" + (startDafHayomi.get(Calendar.MONTH) + 1) + "/" + startDafHayomi.get(Calendar.YEAR));
+                    mPage.setPageDate(UtilsCalender.dateStringFormat(startDafHayomi));
                     mListLearning.add(mPage);
                     startDafHayomi.add(Calendar.DATE, 1);
                     id++;
