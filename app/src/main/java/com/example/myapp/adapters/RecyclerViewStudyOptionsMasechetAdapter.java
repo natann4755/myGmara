@@ -32,7 +32,7 @@ public class RecyclerViewStudyOptionsMasechetAdapter extends RecyclerView.Adapte
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_one_masechet,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_masechet_in_profile,parent,false);
         return new RecyclerViewStudyOptionsMasechetAdapter.Holder(v);
     }
 
@@ -52,7 +52,7 @@ public class RecyclerViewStudyOptionsMasechetAdapter extends RecyclerView.Adapte
 
         public Holder(@NonNull View itemView) {
             super(itemView);
-            study = itemView.findViewById(R.id.masechet_text);
+            study = itemView.findViewById(R.id.rv_HORIZONTAL_text_book_TV);
         }
 
         public void setHolder (MasechetItem masechetItem){
@@ -67,6 +67,6 @@ public class RecyclerViewStudyOptionsMasechetAdapter extends RecyclerView.Adapte
     }
 
     public interface CreateTypeOfStudy {
-        void CreateListTypeOfStudy(String stringTypeOfStudy, int masechetPage);
+        void CreateListTypeOfStudy(String stringTypeOfStudy, int pageMasachet);
     }
 }

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,11 @@ import com.example.myapp.activity.SplashActivity;
 import com.example.myapp.adapters.AllMasechtotAdapter;
 import com.example.myapp.adapters.OneDafAdapter;
 import com.example.myapp.databinding.FragmentShewStudyRvBinding;
+import com.example.myapp.utils.UtilsCalender;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +31,8 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
     public static final String TAG = ShewStudyRvFragment.class.getSimpleName();
     private FragmentShewStudyRvBinding binding;
     private ArrayList<DafLearning1> myList1 = new ArrayList<>();
+    private ArrayList<String> allMasechtot;
+    private RecyclerView recyclerViewMasechtot;
     private OneDafAdapter myAdapter;
 
 
@@ -65,6 +70,7 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
         return binding.getRoot();
     }
 
+
     private void initReciclerviewDapim() {
 
         RecyclerView recyclerView = binding.showStudyRVDapim;
@@ -74,23 +80,47 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
     }
 
     private void initReciclerviewMasechtot() {
-        RecyclerView recyclerViewMasechtot = binding.showStudyRVMasechtot;
+        recyclerViewMasechtot = binding.showStudyRVMasechtot;
         recyclerViewMasechtot.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        ArrayList<String> allMasechtot = new ArrayList<>();
+        allMasechtot = new ArrayList<>();
         for (int i = 1; i <myList1.size() ; i++) {
-            if(i == myList1.size()-1){
+            if (allMasechtot.size()==0){
                 allMasechtot.add(myList1.get(i).getMasechet());
-                AllMasechtotAdapter myAdapter2 = new AllMasechtotAdapter(getContext(),allMasechtot,this);
-                recyclerViewMasechtot.setAdapter(myAdapter2);
-                return;
+            }else if(!myList1.get(i).getMasechet().equals(allMasechtot.get(allMasechtot.size()-1))){
+                allMasechtot.add(myList1.get(i).getMasechet());
             }
-            if(!myList1.get(i).getMasechet().equals(myList1.get(i-1).getMasechet())){
-                allMasechtot.add(myList1.get(i-1).getMasechet());
-            }
+        }
+//        int todayMasechet = findTodayDafClickOnRV();
+
+            AllMasechtotAdapter myAdapter2 = new AllMasechtotAdapter(getContext(),allMasechtot,this);
+            recyclerViewMasechtot.setAdapter(myAdapter2);
+
+//            if (todayMasechet!= -1) {
+//                recyclerViewMasechtot.findViewHolderForLayoutPosition(todayMasechet).itemView.performClick();
+////                postAndNotifyAdapter(new Handler(), recyclerViewMasechtot, todayMasechet);
+//            }
 
         }
 
-    }
+
+//    private int findTodayDafClickOnRV() {
+//        String todayMasechet = "";
+//        String todayDate = UtilsCalender.dateStringFormat(Calendar.getInstance());
+//        for (int i = 0; i < myList1.size(); i++) {
+//            if (myList1.get(i).getPageDate().equals(todayDate)) {
+//                todayMasechet = myList1.get(i).getMasechet();
+//                break;
+//            }
+//        }
+//        int masechet = -1;
+//        for (int i = 0; i < allMasechtot.size(); i++) {
+//            if (allMasechtot.get(i).equals(todayMasechet)) {
+//                masechet = i;
+//                break;
+//            }
+//        }
+//        return masechet;
+//    }
     private void initTabLayout() {
         TabLayout tabLayout = binding.tabLayoutTypeList;
         TabLayout.Tab tab1 = tabLayout.newTab();
@@ -145,4 +175,20 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
     public void nameMasechet(String nameMasechet) {
         myAdapter.filterAllMasechtot(nameMasechet);
     }
+
+
+//    protected void postAndNotifyAdapter(final Handler handler, final RecyclerView recyclerView, int position) {
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                if ( recyclerView.findViewHolderForLayoutPosition(position)!=null) {
+//                    // This will call first item by calling "performClick()" of view.
+//                    recyclerView.findViewHolderForLayoutPosition(position).itemView.performClick();
+//                } else {
+//                    //
+//                    postAndNotifyAdapter(handler, recyclerView, position);
+//                }
+//            }
+//        });
+//    }
 }
