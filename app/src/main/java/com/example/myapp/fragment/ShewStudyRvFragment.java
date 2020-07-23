@@ -32,6 +32,7 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
     private FragmentShewStudyRvBinding binding;
     private ArrayList<DafLearning1> myList1 = new ArrayList<>();
     private ArrayList<String> allMasechtot;
+    private  RecyclerView recyclerView;
     private RecyclerView recyclerViewMasechtot;
     private OneDafAdapter myAdapter;
 
@@ -73,10 +74,15 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
 
     private void initReciclerviewDapim() {
 
-        RecyclerView recyclerView = binding.showStudyRVDapim;
+        recyclerView = binding.showStudyRVDapim;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        myAdapter = new OneDafAdapter(getContext(),myList1);
+        myAdapter = new OneDafAdapter(getContext(), myList1);
         recyclerView.setAdapter(myAdapter);
+        int todayDaf = findTodayDafMoveRV();
+        if (todayDaf != -1) {
+//            recyclerViewMasechtot.findViewHolderForLayoutPosition(todayDaf).itemView.performClick();
+            recyclerView.scrollToPosition(todayDaf);
+        }
     }
 
     private void initReciclerviewMasechtot() {
@@ -90,37 +96,27 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
                 allMasechtot.add(myList1.get(i).getMasechet());
             }
         }
-//        int todayMasechet = findTodayDafClickOnRV();
+
 
             AllMasechtotAdapter myAdapter2 = new AllMasechtotAdapter(getContext(),allMasechtot,this);
             recyclerViewMasechtot.setAdapter(myAdapter2);
 
-//            if (todayMasechet!= -1) {
-//                recyclerViewMasechtot.findViewHolderForLayoutPosition(todayMasechet).itemView.performClick();
-////                postAndNotifyAdapter(new Handler(), recyclerViewMasechtot, todayMasechet);
-//            }
+            }
 
+
+
+    private int findTodayDafMoveRV() {
+        int todayDafInList = -1;
+        String today = UtilsCalender.dateStringFormat(Calendar.getInstance());
+        for (int i = 0; i < myList1.size(); i++) {
+            if (myList1.get(i).getPageDate().equals(today)) {
+                todayDafInList = i;
+                break;
+            }
         }
+        return todayDafInList;
+    }
 
-
-//    private int findTodayDafClickOnRV() {
-//        String todayMasechet = "";
-//        String todayDate = UtilsCalender.dateStringFormat(Calendar.getInstance());
-//        for (int i = 0; i < myList1.size(); i++) {
-//            if (myList1.get(i).getPageDate().equals(todayDate)) {
-//                todayMasechet = myList1.get(i).getMasechet();
-//                break;
-//            }
-//        }
-//        int masechet = -1;
-//        for (int i = 0; i < allMasechtot.size(); i++) {
-//            if (allMasechtot.get(i).equals(todayMasechet)) {
-//                masechet = i;
-//                break;
-//            }
-//        }
-//        return masechet;
-//    }
     private void initTabLayout() {
         TabLayout tabLayout = binding.tabLayoutTypeList;
         TabLayout.Tab tab1 = tabLayout.newTab();
@@ -174,21 +170,6 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
     @Override
     public void nameMasechet(String nameMasechet) {
         myAdapter.filterAllMasechtot(nameMasechet);
+        recyclerView.scrollToPosition(0);
     }
-
-
-//    protected void postAndNotifyAdapter(final Handler handler, final RecyclerView recyclerView, int position) {
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                if ( recyclerView.findViewHolderForLayoutPosition(position)!=null) {
-//                    // This will call first item by calling "performClick()" of view.
-//                    recyclerView.findViewHolderForLayoutPosition(position).itemView.performClick();
-//                } else {
-//                    //
-//                    postAndNotifyAdapter(handler, recyclerView, position);
-//                }
-//            }
-//        });
-//    }
 }
