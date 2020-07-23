@@ -119,7 +119,7 @@ public class TypeStudyProfileFragment extends Fragment implements RecyclerViewSt
         myRecyclerViewStudyOptions = binding.myRecyclerView;
         myRecyclerViewStudyOptions.setVisibility(View.VISIBLE);
         myRecyclerViewStudyOptions.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerViewStudyOptionsAdapter = new RecyclerViewStudyOptionsSederAdapter(getContext(), (ArrayList<SederItem>) mAllShas.getSeder());
+        mRecyclerViewStudyOptionsAdapter = new RecyclerViewStudyOptionsSederAdapter(getContext(), (ArrayList<SederItem>) mAllShas.getSeder(),this);
         myRecyclerViewStudyOptions.setAdapter(mRecyclerViewStudyOptionsAdapter);
     }
 

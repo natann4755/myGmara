@@ -78,10 +78,13 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         myAdapter = new OneDafAdapter(getContext(), myList1);
         recyclerView.setAdapter(myAdapter);
-        int todayDaf = findTodayDafMoveRV();
-        if (todayDaf != -1) {
+
+        if (myList1.size()>2000){
+            int todayDaf = findTodayDafMoveRV();
+            if (todayDaf != -1) {
 //            recyclerViewMasechtot.findViewHolderForLayoutPosition(todayDaf).itemView.performClick();
-            recyclerView.scrollToPosition(todayDaf);
+                recyclerView.scrollToPosition(todayDaf);
+            }
         }
     }
 

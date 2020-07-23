@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,10 +22,12 @@ public class RecyclerViewStudyOptionsSederAdapter extends RecyclerView.Adapter<R
 
     private Context mContext;
     private ArrayList<SederItem> mStudyOptions = new ArrayList<>();
+    private RecyclerViewStudyOptionsMasechetAdapter.CreateTypeOfStudy createTypeOfStudy;
 
-    public RecyclerViewStudyOptionsSederAdapter(Context mContext, ArrayList<SederItem> sederOptions) {
+    public RecyclerViewStudyOptionsSederAdapter(Context mContext, ArrayList<SederItem> sederOptions, RecyclerViewStudyOptionsMasechetAdapter.CreateTypeOfStudy c) {
         this.mContext = mContext;
         this.mStudyOptions = sederOptions;
+        this.createTypeOfStudy = c;
     }
 
     @NonNull
@@ -65,7 +68,7 @@ public class RecyclerViewStudyOptionsSederAdapter extends RecyclerView.Adapter<R
                 } else {
                     sederItem.setOpen(true);
                     mMasechtotRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
-                    mRecyclerViewStudyOptionsMasechetAdapter = new RecyclerViewStudyOptionsMasechetAdapter(sederItem.getMasechtot(), mContext);
+                    mRecyclerViewStudyOptionsMasechetAdapter = new RecyclerViewStudyOptionsMasechetAdapter(sederItem.getMasechtot(), mContext, createTypeOfStudy);
                     mMasechtotRecyclerView.setAdapter(mRecyclerViewStudyOptionsMasechetAdapter);
                     mRvLinearLayout.setVisibility(View.VISIBLE);
                 }

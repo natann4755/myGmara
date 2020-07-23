@@ -23,10 +23,12 @@ public class RecyclerViewStudyOptionsMasechetAdapter extends RecyclerView.Adapte
     private CreateTypeOfStudy mListener;
     private Context mContext;
 
-    public RecyclerViewStudyOptionsMasechetAdapter(List<MasechetItem> mSederItems, Context context) {
+
+    public RecyclerViewStudyOptionsMasechetAdapter(List<MasechetItem> mSederItems, Context context, CreateTypeOfStudy createTypeOfStudy) {
         this.mSederItems = mSederItems;
         mContext = context;
-        this.mListener = (CreateTypeOfStudy) context;
+        this.mListener = createTypeOfStudy;
+
     }
 
     @NonNull

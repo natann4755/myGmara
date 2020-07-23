@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.icu.util.HebrewCalendar;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -38,7 +39,8 @@ import java.util.Objects;
 
 import static com.example.myapp.activity.SplashActivity.KEY_EXTRA_List1;
 
-public class ProfileActivity extends AppCompatActivity implements TypeStudyProfileFragment.OnFragmentTypeStudyProfile, NumberOfRepetitionsProfileFragment.OnFragmentNumberOfRepetitionsProfile {
+public class ProfileActivity extends AppCompatActivity implements TypeStudyProfileFragment.OnFragmentTypeStudyProfile, NumberOfRepetitionsProfileFragment.OnFragmentNumberOfRepetitionsProfile
+ {
 
     private ActivityProfileBinding binding;
     private ArrayList<DafLearning1> mListLearning = new ArrayList<>();
@@ -82,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity implements TypeStudyProfi
 
     private void createListAllShas() {
         mListLearning.clear();
-        Calendar startDafHayomi = findDateOfStartDafHayomi();
+        Calendar startDafHayomi = UtilsCalender.findDateOfStartDafHayomiEnglishDate();
         int id = 1;
         for (int i = 0; i < mAllShas.getSeder().size(); i++) {
             for (int j = 0; j < mAllShas.getSeder().get(i).getMasechtot().size(); j++) {
@@ -98,35 +100,7 @@ public class ProfileActivity extends AppCompatActivity implements TypeStudyProfi
         }
     }
 
-    private Calendar findDateOfStartDafHayomi() {
-        Calendar today = Calendar.getInstance();
-        ArrayList<Calendar> startDafHyomiDates =  initListStartDafHyomiDates();
-        if (today.after(startDafHyomiDates.get(0)) && today.before(startDafHyomiDates.get(1))){
-            return startDafHyomiDates.get(0);
-        }
-        else if (today.after(startDafHyomiDates.get(1)) && today.before(startDafHyomiDates.get(2))){
-            return startDafHyomiDates.get(1);
-        }else {
-            return startDafHyomiDates.get(2);
-        }
-    }
 
-    private ArrayList<Calendar> initListStartDafHyomiDates() {
-        ArrayList <Calendar> listStartDafHyomiDates = new ArrayList<>();
-        listStartDafHyomiDates.add(createCalender(2012,7,3));
-        listStartDafHyomiDates.add(createCalender(2020,0,5));
-        listStartDafHyomiDates.add(createCalender(2027,5,8));
-//        add more machzorim!!!!!!!!!!!!!!!!!!
-        return listStartDafHyomiDates;
-    }
-
-    private Calendar createCalender(int year, int month, int day) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR,year);
-        c.set(Calendar.MONTH,month);
-        c.set(Calendar.DAY_OF_MONTH,day);
-        return c;
-    }
 
     private void createListMasechet(String masechetName, int pages) {
         mListLearning.clear();

@@ -20,6 +20,8 @@ import com.example.myapp.utils.ManageSharedPreferences;
 import com.example.myapp.utils.UtilsCalender;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 
 public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder> {
     private LayoutInflater mInflater;
@@ -83,19 +85,61 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
             }
         }
         myListDaf.clear();
+        Collections.reverse(myListFilterDaf);
         myListDaf.addAll(myListFilterDaf);
         notifyDataSetChanged();
     }
     public void filterSkipt(){
         myListFilterDaf.clear();
-        for (int i = 0; i <myListALLDaf.size() ; i++) {
-            if (!myListALLDaf.get(i).isLearning()) {
-                myListFilterDaf.add(myListALLDaf.get(i));
+        int myLastLerneng = -1; findLastLerneng();
+        int todayDaf = -1;
+        if(myListDaf.size()<2000){
+            myLastLerneng = findLastLerneng();
+            if (myLastLerneng != -1) {
+                for (int i = 0; i <= myLastLerneng; i++) {
+                    if (!myListALLDaf.get(i).isLearning()) {
+                        myListFilterDaf.add(myListALLDaf.get(i));
+                    }
+                }
             }
         }
+        if(myListDaf.size()>2000){
+            todayDaf = findTodayDafMoveRV();
+            if (todayDaf != -1) {
+                for (int i = 0; i <= todayDaf; i++) {
+                    if (!myListALLDaf.get(i).isLearning()) {
+                        myListFilterDaf.add(myListALLDaf.get(i));
+                    }
+
+                }
+            }
+        }
+
         myListDaf.clear();
+        Collections.reverse(myListFilterDaf);
         myListDaf.addAll(myListFilterDaf);
         notifyDataSetChanged();
+    }
+    private int findLastLerneng() {
+        int lastLerneng =-1;
+        for (int i = 0; i <myListALLDaf.size() ; i++) {
+            if (myListALLDaf.get(i).isLearning()) {
+                lastLerneng = i;
+            }
+        }
+        return lastLerneng;
+
+    }
+    public  int findTodayDafMoveRV() {
+        int todayDafInList = -1;
+        String today = UtilsCalender.dateStringFormat(Calendar.getInstance());
+        for (int i = 0; i < myListALLDaf.size(); i++) {
+            if (myListALLDaf.get(i).getPageDate().equals(today)) {
+                todayDafInList = i;
+                break;
+            }
+        }
+        return todayDafInList;
     }
     public void filterAllDapim(){
         myListDaf.clear();

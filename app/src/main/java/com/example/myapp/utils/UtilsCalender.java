@@ -1,17 +1,52 @@
 package com.example.myapp.utils;
 
+import android.icu.util.HebrewCalendar;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class UtilsCalender {
 
-//    public static String convertDateToHebrewDate(int year, int month, int day){
+    public static Calendar findDateOfStartDafHayomiEnglishDate() {
+        Calendar today = Calendar.getInstance();
+        ArrayList<Calendar> startDafHyomiDates =  initListStartDafHyomiEnglishDate();
+        if (today.after(startDafHyomiDates.get(0)) && today.before(startDafHyomiDates.get(1))){
+            return startDafHyomiDates.get(0);
+        }
+        else if (today.after(startDafHyomiDates.get(1)) && today.before(startDafHyomiDates.get(2))){
+            return startDafHyomiDates.get(1);
+        }else {
+            return startDafHyomiDates.get(2);
+        }
+    }
+
+    private static ArrayList<Calendar> initListStartDafHyomiEnglishDate() {
+        ArrayList <Calendar> listStartDafHyomiDates = new ArrayList<>();
+        listStartDafHyomiDates.add(createEnglishCalender(2012,7,3));
+        listStartDafHyomiDates.add(createEnglishCalender(2020,0,5));
+        listStartDafHyomiDates.add(createEnglishCalender(2027,5,8));
+//        add more machzorim!!!!!!!!!!!!!!!!!!
+        return listStartDafHyomiDates;
+    }
+
+    private static Calendar createEnglishCalender(int year, int month, int day) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR,year);
+        c.set(Calendar.MONTH,month);
+        c.set(Calendar.DAY_OF_MONTH,day);
+        return c;
+    }
+
+//    public static String convertDateToHebrewDate(){
+//
 //
 //    }
 
 
 
-    public static int[] catStringData(String date){
+
+    private static int[] catStringData(String date){
         char [] charDateInts = date.toCharArray();
         int [] mIntDate = new int[3];
         int placeInArray = 0;
