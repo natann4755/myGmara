@@ -5,6 +5,7 @@ import android.icu.util.HebrewCalendar;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class UtilsCalender {
 
@@ -38,12 +39,20 @@ public class UtilsCalender {
         return c;
     }
 
-//    public static String convertDateToHebrewDate(){
-//
-//
-//    }
+    public static String convertDateToHebrewDate(String englishDate){
+        int [] mDate = catStringData(englishDate);
+        Date d = new Date((mDate[2]-1900),(mDate[1]-1),mDate[0]);
+        HebrewCalendar h = new HebrewCalendar(d);
+        String mHebrewDate = ConvertIntToPage.intToPage(h.get(HebrewCalendar.DAY_OF_MONTH))+ " "
+                + findHebrewMonthName (h.get(HebrewCalendar.MONTH)) + " " +  ConvertIntToPage.intToPage (h.get(HebrewCalendar.YEAR));
+        return mHebrewDate;
+    }
 
-
+    private static String findHebrewMonthName (int month){
+//        לפתור אדר א!!!!!
+        String [] nameMonth = {"תשרי","חשוון","כסליו","טבת","שבט","אדר","אדר ב","ניסן","אייר","סיון","תמוז","אב","אלול"};
+        return nameMonth[month];
+    }
 
 
     private static int[] catStringData(String date){

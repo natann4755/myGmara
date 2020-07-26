@@ -17,6 +17,14 @@ public class ConvertIntToPage {
                 pageNum += "טז";
                 break;
             }
+            if (num > 400){
+                pageNum += findPageFromInt(400);
+                i -= 400;
+                if (i > 400){
+                    pageNum += findPageFromInt(400);
+                    i -= 400;
+                }
+            }
             num = i % module;
             if (num != i) {
                 i -= num;
@@ -27,7 +35,7 @@ public class ConvertIntToPage {
         return pageNum;
     }
 
-    public static String findPageFromInt (int intPage){
+    private static String findPageFromInt (int intPage){
         char c;
         if (intPage<=10){
             c=(char)(intPage+1487);

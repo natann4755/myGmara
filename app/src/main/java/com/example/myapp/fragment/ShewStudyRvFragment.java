@@ -141,18 +141,22 @@ public class ShewStudyRvFragment extends Fragment implements AllMasechtotAdapter
             public void onTabSelected(TabLayout.Tab tab) {
                 int tabSelected = tab.getPosition();
                 if(tabSelected==0){
-                    binding.showStudyRVMasechtot.setVisibility(View.VISIBLE);
+                    if (myList1.size() > 2000) {
+                        binding.showStudyRVMasechtot.setVisibility(View.VISIBLE);
+                    }
                     myAdapter.filterAllDapim();
+                    recyclerView.scrollToPosition(0);
                 }
                 if(tabSelected==1) {
                     binding.showStudyRVMasechtot.setVisibility(View.GONE);
                     myAdapter.filterLearnet();
+                    recyclerView.scrollToPosition(0);
                 }
                 if(tabSelected==2) {
                     binding.showStudyRVMasechtot.setVisibility(View.GONE);
                     myAdapter.filterSkipt();
+                    recyclerView.scrollToPosition(0);
                 }
-
             }
 
             @Override

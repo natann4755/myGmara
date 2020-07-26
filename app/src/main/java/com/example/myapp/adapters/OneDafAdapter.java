@@ -91,9 +91,9 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
     }
     public void filterSkipt(){
         myListFilterDaf.clear();
-        int myLastLerneng = -1; findLastLerneng();
         int todayDaf = -1;
-        if(myListDaf.size()<2000){
+        int myLastLerneng = -1;
+        if(myListALLDaf.size()<2000){
             myLastLerneng = findLastLerneng();
             if (myLastLerneng != -1) {
                 for (int i = 0; i <= myLastLerneng; i++) {
@@ -103,14 +103,13 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
                 }
             }
         }
-        if(myListDaf.size()>2000){
+        if(myListALLDaf.size()>2000){
             todayDaf = findTodayDafMoveRV();
             if (todayDaf != -1) {
                 for (int i = 0; i <= todayDaf; i++) {
                     if (!myListALLDaf.get(i).isLearning()) {
                         myListFilterDaf.add(myListALLDaf.get(i));
                     }
-
                 }
             }
         }
@@ -289,7 +288,9 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
             masechet.setText(mDaf.getMasechet());
             numDaf.setText(ConvertIntToPage.intToPage(mDaf.getPageNumber()));
             initChazara(mDaf.getChazara());
-            date.setText(mDaf.getPageDate());
+            if (mDaf.getPageDate() != null && !mDaf.getPageDate().equals("")) {
+                date.setText(UtilsCalender.convertDateToHebrewDate(mDaf.getPageDate()));
+            }
         }
         private void initChazara(int chazara) {
             switch(chazara) {
